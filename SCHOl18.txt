@@ -1,0 +1,118 @@
+SCH018
+
+    /* This is the source for schema SCH018 (VMS/RSX systems) */
+    /* Created : 7/25/95  (RK) */
+    /* Last modified : 10/15/96  (RK) */
+    /* Rev. Level : 1.002 */
+    /* Schema for data collected with the program COM (Cat OculoMotor) */
+    /* Yin-Populin expts. Room 290 */
+    01  SCHNAM TYPE STRING LENGTH 8
+    01  RECLNT                        /* in blocks */
+    01  ANID TYPE STRING LENGTH 12
+    01  DSID TYPE STRING LENGTH 12
+    01  DATE TYPE STRING LENGTH 8
+    01  TIME                          /* in 10ths of seconds since midnight */
+    01  EXTYP TYPE STRING LENGTH 4
+    /* The above completes the mandatory header */
+    
+    
+    01  UDATA                         /* =0 No UET data, =1 Yes UET data */
+    01  ADATA                         /* =0 No A/D data, =1 Yes A/D data */
+    01  CMDATA                        /* =0 No CM data,  =1 Yes CM data  */
+    01  SP1CH                         /* Spikes UET channel number */
+    01  STRTCH                        /* Start sync. UET channel number */
+    01  TERMCH                        /* Terminate UET channel number */
+    01  INWCH                         /* Enter Window UET channel number */
+    01  REWCH                         /* Reward start UET channel number */
+    01  ENDCH                         /* End Trial UET channel number */
+    01  TBASE TYPE REAL               /* UET times base in seconds */
+    01  STFORM                        /* Status table format code */
+    01  NUMPT                         /* No. of pointers in STATUS table */
+    01  LSTAT                         /* Location of Status table */
+    01  NSEQ                          /* No. of sequences in Status table */
+    01  RNSEED                        /* Seed used for random number generator */
+    01  TGRACL1 TYPE REAL             /* Grace time for LED-1 ? (secs) */
+    01  TSPOTL1 TYPE REAL             /* Time to spot LED-1 ? (secs) */
+    01  TGRACL2 TYPE REAL             /* Grace time for LED-2 ? (secs) */
+    01  TSPOTL2 TYPE REAL             /* Time to spot LED-2 ? (secs) */
+    01  SPONTIM TYPE REAL             /* Spontaneous time ? (secs) */
+    01  ISDREW TYPE REAL              /* Inter-seq delay after reward (secs) */
+    01  ISDNOREW TYPE REAL            /* Inter-seq delay after no-reward (secs) */
+    01  ATTLOW TYPE REAL              /* Attenuator low value (dB) */
+    01  ATTHIGH TYPE REAL             /* Attenuator High value (dB) */
+    01  ATTINC TYPE REAL              /* Attn. Step size (dB) */
+    01  LAPEND                        /* Location of "appended data" table */
+    01  SCAPEND TYPE STRING LENGTH 8  /* Schema name for appended data */
+    
+    01  FXPAR TYPE RG
+        02  LFXPAR                     /* Length of FXPAR RG (words) */
+        02  NFXPAR                     /* Number of fixed variables */
+        02  FXPARV TYPE RG OCCURS NFXPAR TIMES
+            03  FXVNAM TYPE STRING 8   /* Fixed Variable name */
+            03  FXVTYP TYPE I*2        /* Fixed Var type 1=int,2=fp,3=char */
+            03  FXVLEN TYPE I*2        /* Length in 32-bit words */
+            03  FXVVAL LENGTH FXVLEN /* Fixed variable value */
+    01  COMENT TYPE STRING LENGTH 60  /* Subjective comment */
+    01  NSUBTASK                      /* No. of sub-tasks in this data set */
+    01  SUBTPAR TYPE RG OCCURS NSUBTASK TIMES
+        02  LSUBTPAR                   /* Length of SUBTPAR RG (words) */
+        02  NSUBTPAR                   /* Number of sub-task parameters */
+        02  SUBTPARV TYPE RG OCCURS NSUBTPAR TIMES
+            03  SUBTVNAM TYPE STRING 8      /* Sub-Task Variable name */
+            03  SUBTVTYP TYPE I*2           /* Sub-Task Var type 1=int,2=floating point,3=char */
+            03  SUBTVLEN TYPE I*2           /* Length in 32-bit words */
+            03  SUBTVVAL LENGTH SUBTVLEN    /* Sub-Task variable value */
+    
+    01  AVOLC TYPE REAL               /* Voltage conversion factor */
+    01  AVCC                          /* Voltage Conversion Code */
+    01  ANBITS                        /* No. of bits per sample 16/32 */
+    01  NACH                          /* No. of A/D channels */
+    01  ADCH TYPE RG OCCURS NACH TIMES
+        02  ACHAN                     /* A/D Channel number */
+        02  SRATE TYPE REAL           /* Sampling rate (samples/sec) */
+        02  ASAMPT TYPE REAL          /* Analog sampling time in secs */
+        02  NSAMP                     /* Number of A/D samples */
+    01  COILCODE                      /* Coil calib. code (1,2,3 etc.) */
+    01  NCOILCOF                      /* Number of coil calib coefficients */
+    01  NCOIL                         /* Number of coils */
+    01  COILINF TYPE RG OCCURS NCOIL TIMES
+        02  COILPOS TYPE STRING 8     /* Coil position (e.g. LEFTEAR,RITEAR) */
+        02  ADCHX                     /* A/D channel number for X-position */
+        02  ADCHY                     /* A/D channel number for Y-position */
+        02  COILCOF TYPE RG OCCURS NCOILCOF TIMES
+            03  COFX TYPE REAL        /* Coefficient for X-direction */
+            03  COFY TYPE REAL        /* Coefficient for Y-direction */
+    01  AVOLCCM TYPE REAL             /* voltage conversion factor for CM */
+    01  AVCCCM                        /* voltage conversion code for CM */
+    01  ANBITSCM                      /* vits/sample for CM (16 or 32) */
+    01  ACHANCM                       /* vhannel number for CM */
+    01  NUMCM                         /* vumber of CM recordings per trial */
+    01  NUMLED                        /* votal number of LEDs */
+    01  LEDPOS TYPE RG OCCURS NUMLED TIMES
+        02  LEDPAZIM TYPE REAL        /* LED azimuth position (-180 to +180) */
+        02  LEDPELEV TYPE REAL        /* LED elevation pos. (-90 to +90) */
+    01  NUMSPK                        /* Total number of Speakers */
+    01  SPKPOS TYPE RG OCCURS NUMSPK TIMES
+        02  SPKPAZIM TYPE REAL        /* Speaker azimuth pos. (-180 to +180) */
+        02  SPKPELEV TYPE REAL        /* Speaker elevation pos. (-90 to +90) */
+    01  LDUMMY
+    01  DUMMY LENGTH LDUMMY
+    01  DATA TYPE RG OCCURS NSEQ TIMES
+        02  TSDATA TYPE VECTOR INTEGER                  /* spike time data */
+        02  ANDATA TYPE VECTOR I*2 OCCURS NACH TIMES    /* sampled analog data */
+        02  CMDATA TYPE VECTOR I*2 OCCURS NUMCM TIMES   /* sampled CM data */
+        02  NDERV                                       /* no. of derived vars */
+        02  DERV TYPE RG OCCURS NDERV TIMES
+            03 DERVNAM TYPE STRING 8                    /* name of derived var */
+            03 DERVTYP TYPE I*2                         /* variable type */
+            03 DERVLEN TYPE I*2                         /* length in 32 bit wrds */
+            03 DERVAL LENGTH DERVLEN                    /* val of derived var */
+    01  STATTB TYPE RG OCCURS NSEQ TIMES              /* Type-3 Status Table */
+        02  NVSTAT                                      /* No. vars in tab entry */
+        02  STVARS TYPE RG OCCURS NVSTAT TIMES
+            03 STVNAM TYPE STRING 8                    /* name of table var */
+            03 STVTYP TYPE I*2                         /* variable type */
+            03 STVLEN TYPE I*2                         /* length in 32 bit wrds */
+            03 STVAL LENGTH STVLEN                     /* val of Stat Tab. var. */
+        02  ADDRPT OCCURS NUMPT TIMES                   /* ADDRESS POINTERS */
+00
