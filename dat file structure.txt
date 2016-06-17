@@ -5,4 +5,4 @@ The idea is that each subject gets it's own dat file and each experiment that su
 every dat file is composed of a __directory__ and zero or more __datasets__.
 the directory is a file header that contain a little organizational information like who's the subject for this datfile, when was it last updated and things like that. But it's core function is to contain pointers to the different datasets within the file. 
 
-![image of dat file structure](datfilestruc.png)
+![image of dat file structure](./datfilestruc.png)
