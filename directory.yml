@@ -1,0 +1,66 @@
+---   
+title: directory header
+version: 1.000
+created:
+    date: 7/25/95
+    author: RK
+last_modified:
+    date: 10/12/15
+    author: Russell little
+    reason: Converted to yaml for parsedat.py
+description: >
+    This is the directory header required by all dat files.
+    it contains information about the subject as well as a set of 
+    dataset headers. 
+    These dataset headers determine what schema to use when parsing them.
+
+
+schema:
+    -   name: animal id
+        type: str
+        length: 12
+        comment: subject associated with the file
+    -   name: number of datasets
+        type: int
+        comment: this determines how many dset headers there will be at the end.
+    -   name: number of blocks in directory
+        type: int
+        comment: there may be empty ones before the first dataset usually bigger than needs be
+    -   name: unused
+        type: str
+        length: 4
+    -   name: last updated
+        type: str
+        length: 8
+        comment: last time file was updated. not used.
+    -   name: unused
+        type: str
+        length: 32
+    -   name: dataset header
+        type: rg
+        length: number of datasets
+        comment: > 
+            this is how many dataset headers there are. 
+            they are contiguous. However there's a break 
+            before the end of the directory usually
+        scheme:
+            -   name: name
+                length: 8
+                comment: name of the scheme the dataset uses
+                type: str
+            -   name: size
+                type: int
+                comment: dataset size in blocks
+            -   name: id
+                type: str
+                length: 12
+                comment: subject/test id. 
+            -   name: start
+                type: int
+                comment: block number where dataset starts
+            -   name: exp
+                type: str
+                length: 4
+                comment: experiment type. e.g. Populin uses COM
+
+
