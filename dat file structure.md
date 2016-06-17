@@ -1,0 +1,8 @@
+dat files are a very flexible programmatic way to store experimental information about a single subject. 
+
+The idea is that each subject gets it's own dat file and each experiment that subject undergoes is saved into a single dataset
+
+every dat file is composed of a __directory__ and zero or more __datasets__.
+the directory is a file header that contain a little organizational information like who's the subject for this datfile, when was it last updated and things like that. But it's core function is to contain pointers to the different datasets within the file. 
+
+![image of dat file structure](datfilestruc.png)
